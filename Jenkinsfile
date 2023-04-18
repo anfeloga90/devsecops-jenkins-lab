@@ -65,12 +65,19 @@ pipeline {
                           -Dsonar.tests=./${PROJECT_ROOT}/test \
                           -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
             }
-            timeout(time: 15, unit: 'MINUTES') {
+            //timeout(time: 2, unit: 'MINUTES') {
               // In case of SonarQube failure or direct timeout exceed, stop Pipeline
               // waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
-              waitForQualityGate abortPipeline: true
-            }
+            //}
           }
+        
+         stage('Quality Gate') {
+           steps {
+             timeout(time: 2, unit: 'MINUTES') {
+               waitForQualityGate abortPipeline: true
+             }
+           }
+         }
       }
   }
 }
