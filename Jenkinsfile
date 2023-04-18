@@ -61,7 +61,7 @@ pipeline {
                           -Dsonar.host.url=http://mysonarqube:9000 \
                           -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
                           -Dsonar.login=admin \
-                          -Dsonar.password=admin \
+                          -Dsonar.password=D4v0ps2023 \
                           -Dsonar.tests=./${PROJECT_ROOT}/test \
                           -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
             }
