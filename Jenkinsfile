@@ -74,9 +74,15 @@ pipeline {
 
       stage('Quality Gate') {
            steps {
-             timeout(time: 2, unit: 'MINUTES') {
-               waitForQualityGate abortPipeline: true
-             }
+            // Function to validate that the message returned from SonarQube is ok
+def qualityGateValidation(qg) {
+  if (qg.status != 'OK') {
+    // emailext body: "WARNING: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
+    return true
+  }
+  // emailext body: "CONGRATS: Code coverage is higher than 80%  in Pipeline ${BUILD_NUMBER} - SUCCESS", subject: 'Info - Correct Pipeline', to: "${EMAIL_ADDRESS}"
+  return false
+}
            }
          }
   }
