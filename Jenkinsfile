@@ -65,21 +65,11 @@ pipeline {
                           -Dsonar.tests=./${PROJECT_ROOT}/test \
                           -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
             }
-            //timeout(time: 2, unit: 'MINUTES') {
+            timeout(time: 2, unit: 'MINUTES') {
               // In case of SonarQube failure or direct timeout exceed, stop Pipeline
-              // waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
-            //}
+               waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
+            }
           }
       }
-
-      stage('Quality Gate') {
-           steps {
-             // Function to validate that the message returned from SonarQube is ok
-                if (qg.status != 'OK') {
-                  // emailext body: "WARNING: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
-                  return true
-                }
-           }
-         }
   }
 }
